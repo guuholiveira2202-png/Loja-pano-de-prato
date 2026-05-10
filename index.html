@@ -3,443 +3,508 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pano de Prato</title>
+    <title>Hype.Panos | Premium</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
     <style>
+        /* === VARIÁVEIS DE COR & DESIGN === */
         :root {
-            --bg-main: #07080a;
-            --bg-card: #0f1115;
-            --bg-header: rgba(7, 8, 10, 0.9);
+            --bg-main: #0a0b0e;
+            --bg-card: #121419;
+            --bg-header: rgba(10, 11, 14, 0.85);
             
             --text-title: #F5F0E6;
-            --text-body: #8a8d93;
-            --text-white: #FFFFFF;
+            --text-body: #9ca3af;
+            --text-white: #ffffff;
             
             --color-amber: #E9C46A;
             --color-amber-dark: #b59242;
             --color-emerald: #2A9D8F;
             --color-emerald-dark: #1f7a6f;
             --color-sapphire: #457B9D;
-            --color-sapphire-dark: #325d7a;
             --color-ruby: #E76F51;
             
-            --border-color: rgba(255, 255, 255, 0.08);
+            --border-light: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.15);
             
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Inter', sans-serif;
+            
+            --shadow-card: 0 10px 30px -10px rgba(0,0,0,0.5);
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
+        /* === RESET BÁSICO === */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-
         body {
             background-color: var(--bg-main);
             color: var(--text-body);
             font-family: var(--font-body);
             -webkit-font-smoothing: antialiased;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 15% 50%, rgba(233, 196, 106, 0.03) 0%, transparent 40%),
-                              radial-gradient(circle at 85% 30%, rgba(42, 157, 143, 0.03) 0%, transparent 40%);
         }
 
-        /* HEADER */
-        .dark-header { 
-            position: sticky; top: 0; z-index: 100; 
-            background: var(--bg-header); backdrop-filter: blur(20px); 
-            border-bottom: 1px solid var(--border-color); 
+        /* === CABEÇALHO (HEADER) === */
+        .header { 
+            position: fixed; top: 0; width: 100%; z-index: 100; 
+            background: var(--bg-header); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-light); transition: var(--transition-smooth);
         }
         .nav-container { 
             max-width: 1400px; margin: 0 auto; padding: 1rem 4%; 
             display: flex; justify-content: space-between; align-items: center; 
         }
         .logo { 
-            font-family: var(--font-heading); font-size: 1.5rem; 
-            color: var(--color-amber); font-weight: 600; display: flex; align-items: center; gap: 8px; letter-spacing: 1px;
+            font-family: var(--font-heading); font-size: 1.6rem; color: var(--color-amber); 
+            text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px;
         }
-        .links { display: flex; gap: 2.5rem; align-items: center; }
-        .links a { 
+        .nav-links { display: flex; gap: 2.5rem; }
+        .nav-links a { 
             color: var(--text-body); text-decoration: none; font-size: 0.85rem; 
-            letter-spacing: 1px; transition: 0.3s; font-weight: 500; text-transform: uppercase;
-            position: relative; padding-bottom: 5px;
+            font-weight: 500; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
         }
-        .links a:hover { color: var(--text-white); }
-        .links a.active { color: var(--text-white); }
-        .links a.active::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, var(--color-amber), transparent);
-            box-shadow: 0 0 10px var(--color-amber);
-        }
-
-        .header-actions { display: flex; align-items: center; gap: 1.5rem; }
+        .nav-links a:hover, .nav-links a.active { color: var(--color-amber); }
+        
+        .header-actions { display: flex; gap: 1.5rem; align-items: center; }
         .icon-btn {
-            background: transparent; border: none; color: var(--text-white);
-            font-size: 1.4rem; cursor: pointer; transition: 0.3s; position: relative;
+            background: none; border: none; color: var(--text-white); font-size: 1.5rem; 
+            cursor: pointer; position: relative; transition: 0.3s;
         }
-        .icon-btn:hover { color: var(--color-amber); }
+        .icon-btn:hover { color: var(--color-amber); transform: translateY(-2px); }
         .cart-badge {
-            position: absolute; top: -5px; right: -8px; background: var(--color-amber);
-            color: #000; font-size: 0.65rem; font-weight: 700; width: 16px; height: 16px;
-            display: flex; align-items: center; justify-content: center; border-radius: 50%;
+            position: absolute; top: -6px; right: -8px; background: var(--color-amber);
+            color: #000; font-size: 0.7rem; font-weight: 700; width: 18px; height: 18px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
         }
 
-        /* MAIN LAYOUT */
-        .main-layout {
-            max-width: 1400px; margin: 3rem auto; padding: 0 4%;
-            display: grid; grid-template-columns: 350px 1fr; gap: 4rem;
-            flex-grow: 1; align-items: start;
+        /* === BANNERS & HERO (FULL-WIDTH) === */
+        .hero {
+            position: relative; width: 100%; height: 80vh; min-height: 600px;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            background-image: url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            margin-bottom: 5rem;
         }
-
-        /* HERO SIDEBAR */
-        .hero-sidebar { display: flex; flex-direction: column; gap: 2rem; }
-        .hero-image {
-            width: 100%; height: 350px; border-radius: 16px; overflow: hidden;
-            position: relative; border: 1px solid rgba(255,255,255,0.05);
+        .hero::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(10,11,14,0.3) 0%, rgba(10,11,14,1) 100%);
         }
-        .hero-image img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); }
-        .hero-text h1 {
-            font-family: var(--font-heading); font-size: 3.5rem; line-height: 1.1; 
-            margin-bottom: 1rem; color: var(--text-title);
+        .hero-content { position: relative; z-index: 10; max-width: 800px; padding: 0 20px; }
+        .hero h1 {
+            font-family: var(--font-heading); font-size: 4.5rem; line-height: 1.1; 
+            color: var(--text-title); margin-bottom: 1.5rem;
         }
         .text-gradient {
-            background: linear-gradient(90deg, var(--color-amber), var(--color-ruby));
+            background: linear-gradient(90deg, var(--color-amber), #E76F51);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-style: italic;
         }
-        .hero-text p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem; }
+        .hero p { font-size: 1.1rem; color: #d1d5db; margin-bottom: 2.5rem; line-height: 1.6; }
         
-        .btn-gradient {
-            background: linear-gradient(90deg, #3a2b25, #5a3d31);
-            border: 1px solid rgba(233,196,106,0.3); color: var(--text-white);
-            padding: 14px 28px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; 
-            letter-spacing: 1px; cursor: pointer; transition: 0.4s;
+        .btn-primary {
+            background: linear-gradient(90deg, var(--color-amber-dark), #8a6c2d);
+            border: 1px solid rgba(233,196,106,0.4); color: #fff;
+            padding: 16px 36px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; 
+            letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; 
+            text-decoration: none; transition: var(--transition-smooth); display: inline-block;
         }
-        .btn-gradient:hover { box-shadow: 0 0 20px rgba(233,196,106,0.2); transform: translateY(-2px); }
+        .btn-primary:hover { box-shadow: 0 8px 25px rgba(233,196,106,0.3); transform: translateY(-3px); }
 
-        /* SHOWCASE (VITRINE) */
-        .showcase h2 {
-            font-family: var(--font-heading); font-size: 2.2rem; color: var(--text-white);
-            margin-bottom: 2rem; font-weight: 400;
-        }
+        /* === VITRINE (SHOWCASE) === */
+        .showcase { max-width: 1400px; margin: 0 auto 6rem; padding: 0 4%; }
+        .section-header { margin-bottom: 3rem; text-align: left; }
+        .section-header h2 { font-family: var(--font-heading); font-size: 2.5rem; color: var(--text-white); font-weight: 400; }
+
         .cards-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem;
         }
 
-        /* NEON CARDS */
+        /* === PRODUCT CARDS === */
         .product-card {
-            background: var(--bg-card); border-radius: 16px; padding: 1rem;
-            border: 2px solid var(--card-dark); display: flex; flex-direction: column;
-            transition: all 0.4s ease; position: relative;
-            box-shadow: 0 0 15px rgba(0,0,0,0.8);
+            background: var(--bg-card); border-radius: 16px; padding: 1.5rem;
+            border: 1px solid var(--border-light); display: flex; flex-direction: column;
+            transition: var(--transition-smooth); box-shadow: var(--shadow-card); position: relative;
         }
-        .product-card:hover {
-            border-color: var(--card-accent);
-            box-shadow: 0 0 25px var(--card-glow), inset 0 0 15px rgba(255,255,255,0.02);
-            transform: translateY(-5px);
-        }
+        .product-card:hover { border-color: var(--border-hover); transform: translateY(-8px); }
 
-        .card-img-wrapper {
-            width: 100%; height: 220px; border-radius: 12px; overflow: hidden; position: relative;
-            margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.05);
+        .card-img {
+            width: 100%; height: 300px; border-radius: 12px; overflow: hidden; 
+            position: relative; margin-bottom: 1.5rem; background: #000;
         }
-        .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
-        .product-card:hover .card-img-wrapper img { transform: scale(1.08); }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+        .product-card:hover .card-img img { transform: scale(1.08); }
 
         .badge-tag {
-            position: absolute; top: 10px; left: 10px; font-size: 0.65rem; font-weight: 700;
-            padding: 5px 10px; border-radius: 6px; z-index: 10; letter-spacing: 0.5px;
-            background: var(--card-dark); color: var(--text-white);
-            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1);
+            position: absolute; top: 12px; left: 12px; font-size: 0.65rem; font-weight: 700;
+            padding: 6px 12px; border-radius: 6px; z-index: 10; letter-spacing: 1px;
+            color: var(--text-white); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); 
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .card-details { display: flex; flex-direction: column; gap: 0.8rem; flex-grow: 1; }
-        .color-label { font-size: 0.8rem; color: var(--text-body); }
+        .card-info { flex-grow: 1; display: flex; flex-direction: column; gap: 1rem; }
+        .product-title { font-size: 1.2rem; font-weight: 600; color: var(--text-title); }
+        .price { font-size: 1.5rem; color: var(--color-amber); font-weight: 700; }
         
-        .swatches { display: flex; gap: 8px; margin-bottom: 0.5rem; }
+        .color-section { display: flex; flex-direction: column; gap: 6px; }
+        .color-label { font-size: 0.8rem; color: var(--text-body); }
+        .swatches { display: flex; gap: 10px; }
         .swatch {
-            width: 20px; height: 20px; border-radius: 50%; border: 2px solid transparent;
-            cursor: pointer; transition: 0.2s;
-        }
-        .swatch.active { border-color: var(--text-white); transform: scale(1.15); box-shadow: 0 0 8px rgba(255,255,255,0.3); }
-
-        .price { font-size: 1.4rem; color: var(--text-white); font-weight: 700; margin-bottom: 1rem; }
-
-        .btn-add {
-            width: 100%; padding: 14px; border-radius: 8px; border: 1px solid var(--card-dark);
-            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
-            color: var(--text-white); font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;
-            display: flex; justify-content: center; align-items: center; gap: 8px;
+            width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent;
             cursor: pointer; transition: 0.3s;
         }
-        .product-card:hover .btn-add {
-            background: var(--card-dark); border-color: var(--card-accent);
-        }
+        .swatch.active { border-color: var(--text-white); transform: scale(1.2); box-shadow: 0 0 10px rgba(255,255,255,0.2); }
 
-        /* DRAWER & BACKDROP (CARRINHO) */
+        .btn-add {
+            width: 100%; padding: 14px; border-radius: 8px; margin-top: auto;
+            background: transparent; border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text-white); font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            cursor: pointer; transition: var(--transition-smooth);
+        }
+        .product-card:hover .btn-add { background: var(--text-white); color: #000; }
+        .btn-add:active { transform: scale(0.97); }
+
+        /* === CARRINHO (DRAWER) === */
         .drawer { 
-            position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; height: 100vh; 
+            position: fixed; top: 0; right: -450px; width: 100%; max-width: 450px; height: 100vh; 
             background: var(--bg-card); z-index: 1000; display: flex; flex-direction: column; 
-            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-left: 1px solid var(--border-color); 
+            transition: right 0.5s cubic-bezier(0.25, 1, 0.5, 1); border-left: 1px solid var(--border-light); 
         }
-        .drawer.open { right: 0; box-shadow: -10px 0 30px rgba(0,0,0,0.8); }
-        .drawer-header { padding: 2rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .drawer.open { right: 0; }
+        .drawer-header { 
+            padding: 1.5rem 2rem; border-bottom: 1px solid var(--border-light); 
+            display: flex; justify-content: space-between; align-items: center; 
+        }
         .drawer-header h3 { font-family: var(--font-heading); color: var(--text-white); font-size: 1.5rem; }
-        .close-btn { background: none; border: none; color: var(--text-body); font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
-        .close-btn:hover { color: var(--text-white); transform: rotate(90deg); }
-        .drawer-body { flex: 1; padding: 2rem; overflow-y: auto; }
-        .drawer-footer { padding: 2rem; border-top: 1px solid var(--border-color); background: rgba(0,0,0,0.2); }
-        .total-row { display: flex; justify-content: space-between; font-size: 1.2rem; color: var(--text-white); margin-bottom: 1.5rem; font-weight: 700;}
-        .btn-checkout { width: 100%; padding: 16px; background: var(--color-amber); color: #000; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-        .btn-checkout:hover { background: #fff; }
-        
-        .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(5px); }
-        .backdrop.show { opacity: 1; visibility: visible; }
-        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--color-emerald); color: #000; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; z-index: 2000; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .toast.show { transform: translateX(-50%) translateY(0); }
-
-        /* RESPONSIVE */
-        @media (max-width: 1024px) {
-            .main-layout { grid-template-columns: 1fr; }
-            .hero-sidebar { text-align: center; max-width: 600px; margin: 0 auto; }
-            .hero-text h1 { font-size: 3rem; }
+        .close-btn { 
+            background: none; border: none; color: var(--text-body); font-size: 1.5rem; 
+            cursor: pointer; transition: 0.3s; 
         }
+        .close-btn:hover { color: var(--text-white); transform: rotate(90deg); }
+        
+        .drawer-body { flex: 1; padding: 2rem; overflow-y: auto; }
+        .cart-item {
+            display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .cart-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; }
+        .cart-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .cart-info h4 { font-size: 0.95rem; color: var(--text-white); font-weight: 500; }
+        .cart-info .price { font-size: 1rem; color: var(--color-amber); }
+        
+        .qtd-controls { 
+            display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.5); 
+            padding: 4px 8px; border-radius: 6px; width: fit-content; border: 1px solid var(--border-light);
+        }
+        .btn-qtd { background: none; border: none; color: var(--text-white); cursor: pointer; font-size: 1rem; padding: 0 5px;}
+        .btn-qtd:hover { color: var(--color-amber); }
+
+        .drawer-footer { padding: 2rem; border-top: 1px solid var(--border-light); background: rgba(0,0,0,0.2); }
+        .total-row { display: flex; justify-content: space-between; font-size: 1.2rem; color: var(--text-white); margin-bottom: 1.5rem; font-weight: 700;}
+        .btn-checkout { 
+            width: 100%; padding: 18px; background: var(--color-emerald); color: #fff; 
+            font-weight: 700; border: none; border-radius: 8px; cursor: pointer; 
+            transition: var(--transition-smooth); font-size: 0.95rem; letter-spacing: 1px;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+        }
+        .btn-checkout:hover { background: var(--color-emerald-dark); transform: translateY(-2px); }
+        
+        .backdrop { 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; 
+            opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(4px);
+        }
+        .backdrop.show { opacity: 1; visibility: visible; }
+
+        /* === FEEDBACKS & WHATSAPP FLOATING === */
+        .toast { 
+            position: fixed; bottom: 30px; left: 50%; transform: translate(-50%, 100px); 
+            background: var(--color-emerald); color: #fff; padding: 12px 24px; border-radius: 50px; 
+            font-weight: 600; font-size: 0.9rem; z-index: 2000; transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .toast.show { transform: translate(-50%, 0); }
+
+        .fab-whatsapp {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            background: #25D366; color: white; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 2rem; z-index: 900;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); transition: 0.3s; cursor: pointer; text-decoration: none;
+        }
+        .fab-whatsapp:hover { transform: scale(1.1); }
+
+        /* === ANIMAÇÕES === */
+        @keyframes bump { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+        .bump { animation: bump 0.3s ease-out; }
+        .fade-in { animation: fadeIn 0.4s ease-in forwards; }
+        @keyframes fadeIn { from { opacity: 0.5; } to { opacity: 1; } }
+
+        /* === RESPONSIVO === */
         @media (max-width: 768px) {
-            .links { display: none; }
-            .hero-image { height: 250px; }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 3rem; }
+            .hero { height: 60vh; min-height: 400px; margin-bottom: 3rem; }
+            .drawer { right: -100%; max-width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <header class="dark-header">
+    <header class="header">
         <div class="nav-container">
-            <div class="logo">Hype. <span style="font-size: 1rem;">Panos</span></div>
-            <nav class="links">
-                <a href="#" class="active">Coleção Vibrante</a>
-               
+            <a href="#" class="logo">
+                <i class="ph ph-squares-four"></i> Hype.Panos
+            </a>
+            <nav class="nav-links">
+                <a href="#" class="active">Início</a>
+                <a href="#vitrine">Coleção</a>
+                <a href="#">Sobre Nós</a>
             </nav>
             <div class="header-actions">
-                <button class="icon-btn"><i class="ph ph-user"></i></button>
-                <button class="icon-btn" onclick="toggleCart()">
+                <button class="icon-btn" aria-label="Perfil"><i class="ph ph-user"></i></button>
+                <button class="icon-btn" onclick="toggleCart()" aria-label="Sacola">
                     <i class="ph ph-shopping-bag"></i>
-                    <span class="cart-badge" id="cart-count">0</span>
+                    <span class="cart-badge" id="cart-count" style="display: none;">0</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <main class="main-layout">
-        <aside class="hero-sidebar">
-            <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop" alt="Cozinha Moderna Dark">
-            </div>
-            <div class="hero-text">
-                <h1>A COZINHA<br><span class="text-gradient">COM VIDA.</span></h1>
-                <p>Descubra a coleção de panos premium com alta absorção. Trazendo texturas rústicas e cores sólidas para transformar o ambiente da sua cozinha, unindo design minimalista e performance técnica.</p>
-                <button class="btn-gradient">VER CORES</button>
-            </div>
-        </aside>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>A COZINHA <br><span class="text-gradient">COM VIDA.</span></h1>
+            <p>Design rústico, texturas envolventes e absorção premium. Transforme o ambiente mais importante da sua casa com nossa nova coleção.</p>
+            <a href="#vitrine" class="btn-primary">Explorar Coleção</a>
+        </div>
+    </section>
 
-        <section class="showcase">
-            <h2>Vitrine</h2>
-            
-            <div class="cards-grid">
-                <div class="product-card" style="--card-accent: var(--color-amber); --card-dark: var(--color-amber-dark); --card-glow: rgba(233,196,106,0.3);">
-                    <div class="card-img-wrapper">
-                        <div class="badge-tag" style="background: rgba(181, 146, 66, 0.8);">MAIS VENDIDO</div>
-                        <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=400&auto=format&fit=crop" alt="Pano Amber" id="img-prod-1">
-                    </div>
-                    <div class="card-details">
-                        <span class="color-label">Color amber</span>
-                        <div class="swatches">
-                            <div class="swatch active" style="background: #D4A373;" onclick="mudarCorProduto('img-prod-1', 'https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=400&auto=format&fit=crop', this)"></div>
-                            <div class="swatch" style="background: #E9C46A;" onclick="mudarCorProduto('img-prod-1', 'https://images.unsplash.com/photo-1522010664893-66440266070a?q=80&w=400&auto=format&fit=crop', this)"></div>
-                            <div class="swatch" style="background: #E76F51;" onclick="mudarCorProduto('img-prod-1', 'https://images.unsplash.com/photo-1600100412853-294022c06951?q=80&w=400&auto=format&fit=crop', this)"></div>
-                        </div>
+    <main class="showcase" id="vitrine">
+        <div class="section-header">
+            <h2>Nossa Coleção</h2>
+        </div>
+        
+        <div class="cards-grid">
+            <div class="product-card">
+                <div class="card-img">
+                    <div class="badge-tag" style="background: rgba(181, 146, 66, 0.8);">MAIS VENDIDO</div>
+                    <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=600&auto=format&fit=crop" alt="Pano Trama Linho" id="img-prod-1">
+                </div>
+                <div class="card-info">
+                    <div>
+                        <h3 class="product-title">Pano Trama Linho</h3>
                         <div class="price">R$ 45,90</div>
-                        <button class="btn-add" onclick="addAoCarrinho(1, 'Pano Trama Linho (Amber)', 45.90, document.getElementById('img-prod-1').src)">
-                            ADICIONAR <i class="ph-fill ph-shopping-bag"></i>
-                        </button>
                     </div>
-                </div>
-
-                <div class="product-card" style="--card-accent: var(--color-emerald); --card-dark: var(--color-emerald-dark); --card-glow: rgba(42,157,143,0.3);">
-                    <div class="card-img-wrapper">
-                        <div class="badge-tag" style="background: rgba(31, 122, 111, 0.8);">NOVIDADE</div>
-                        <img src="https://images.unsplash.com/photo-1584820927498-cafe6c15c544?q=80&w=400&auto=format&fit=crop" alt="Pano Emerald" id="img-prod-2">
-                    </div>
-                    <div class="card-details">
-                        <span class="color-label">Color emerald</span>
+                    <div class="color-section">
+                        <span class="color-label" id="label-prod-1">Cor: Amber</span>
                         <div class="swatches">
-                            <div class="swatch active" style="background: #2A9D8F;" onclick="mudarCorProduto('img-prod-2', 'https://images.unsplash.com/photo-1584820927498-cafe6c15c544?q=80&w=400&auto=format&fit=crop', this)"></div>
-                            <div class="swatch" style="background: #264653;" onclick="mudarCorProduto('img-prod-2', 'https://images.unsplash.com/photo-1617558661642-a1f94ea6b060?q=80&w=400&auto=format&fit=crop', this)"></div>
-                            <div class="swatch" style="background: #8AB17D;" onclick="mudarCorProduto('img-prod-2', 'https://images.unsplash.com/photo-1590656366207-26244589973e?q=80&w=400&auto=format&fit=crop', this)"></div>
+                            <div class="swatch active" style="background: #D4A373;" onclick="mudarCor(this, 'img-prod-1', 'label-prod-1', 'Amber', 'https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=600&auto=format&fit=crop')"></div>
+                            <div class="swatch" style="background: #5A3D31;" onclick="mudarCor(this, 'img-prod-1', 'label-prod-1', 'Dark Rust', 'https://images.unsplash.com/photo-1522010664893-66440266070a?q=80&w=600&auto=format&fit=crop')"></div>
                         </div>
-                        <div class="price">R$ 39,90</div>
-                        <button class="btn-add" onclick="addAoCarrinho(2, 'Pano Absorção Pro (Emerald)', 39.90, document.getElementById('img-prod-2').src)">
-                            ADICIONAR <i class="ph-fill ph-shopping-bag"></i>
-                        </button>
                     </div>
-                </div>
-
-                <div class="product-card" style="--card-accent: var(--color-sapphire); --card-dark: var(--color-sapphire-dark); --card-glow: rgba(69,123,157,0.3);">
-                    <div class="card-img-wrapper">
-                        <div class="badge-tag" style="background: rgba(50, 93, 122, 0.8);">EDIÇÃO LIMITADA</div>
-                        <img src="https://images.unsplash.com/photo-1616400620286-90209f8714eb?q=80&w=400&auto=format&fit=crop" alt="Pano Sapphire" id="img-prod-3">
-                    </div>
-                    <div class="card-details">
-                        <span class="color-label">Color sapphire</span>
-                        <div class="swatches">
-                            <div class="swatch active" style="background: #457B9D;" onclick="mudarCorProduto('img-prod-3', 'https://images.unsplash.com/photo-1616400620286-90209f8714eb?q=80&w=400&auto=format&fit=crop', this)"></div>
-                            <div class="swatch" style="background: #1D3557;" onclick="mudarCorProduto('img-prod-3', 'https://images.unsplash.com/photo-1522010664893-66440266070a?q=80&w=400&auto=format&fit=crop', this)"></div>
-                        </div>
-                        <div class="price">R$ 37,90</div>
-                        <button class="btn-add" onclick="addAoCarrinho(3, 'Pano Fio Penteado (Sapphire)', 37.90, document.getElementById('img-prod-3').src)">
-                            ADICIONAR <i class="ph-fill ph-shopping-bag"></i>
-                        </button>
-                    </div>
+                    <button class="btn-add" data-id="1" data-nome="Pano Trama Linho" data-preco="45.90" data-cor="Amber" onclick="addAoCarrinho(this, 'img-prod-1')">
+                        Adicionar à Sacola <i class="ph-bold ph-plus"></i>
+                    </button>
                 </div>
             </div>
-        </section>
+
+            <div class="product-card">
+                <div class="card-img">
+                    <div class="badge-tag" style="background: rgba(42, 157, 143, 0.8);">NOVIDADE</div>
+                    <img src="https://images.unsplash.com/photo-1584820927498-cafe6c15c544?q=80&w=600&auto=format&fit=crop" alt="Pano Absorção Pro" id="img-prod-2">
+                </div>
+                <div class="card-info">
+                    <div>
+                        <h3 class="product-title">Pano Absorção Pro</h3>
+                        <div class="price">R$ 39,90</div>
+                    </div>
+                    <div class="color-section">
+                        <span class="color-label" id="label-prod-2">Cor: Emerald</span>
+                        <div class="swatches">
+                            <div class="swatch active" style="background: #2A9D8F;" onclick="mudarCor(this, 'img-prod-2', 'label-prod-2', 'Emerald', 'https://images.unsplash.com/photo-1584820927498-cafe6c15c544?q=80&w=600&auto=format&fit=crop')"></div>
+                            <div class="swatch" style="background: #264653;" onclick="mudarCor(this, 'img-prod-2', 'label-prod-2', 'Dark Ocean', 'https://images.unsplash.com/photo-1617558661642-a1f94ea6b060?q=80&w=600&auto=format&fit=crop')"></div>
+                        </div>
+                    </div>
+                    <button class="btn-add" data-id="2" data-nome="Pano Absorção Pro" data-preco="39.90" data-cor="Emerald" onclick="addAoCarrinho(this, 'img-prod-2')">
+                        Adicionar à Sacola <i class="ph-bold ph-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1616400620286-90209f8714eb?q=80&w=600&auto=format&fit=crop" alt="Pano Fio Penteado" id="img-prod-3">
+                </div>
+                <div class="card-info">
+                    <div>
+                        <h3 class="product-title">Pano Fio Penteado</h3>
+                        <div class="price">R$ 37,90</div>
+                    </div>
+                    <div class="color-section">
+                        <span class="color-label" id="label-prod-3">Cor: Sapphire</span>
+                        <div class="swatches">
+                            <div class="swatch active" style="background: #457B9D;" onclick="mudarCor(this, 'img-prod-3', 'label-prod-3', 'Sapphire', 'https://images.unsplash.com/photo-1616400620286-90209f8714eb?q=80&w=600&auto=format&fit=crop')"></div>
+                            <div class="swatch" style="background: #A8DADC;" onclick="mudarCor(this, 'img-prod-3', 'label-prod-3', 'Light Blue', 'https://images.unsplash.com/photo-1590656366207-26244589973e?q=80&w=600&auto=format&fit=crop')"></div>
+                        </div>
+                    </div>
+                    <button class="btn-add" data-id="3" data-nome="Pano Fio Penteado" data-preco="37.90" data-cor="Sapphire" onclick="addAoCarrinho(this, 'img-prod-3')">
+                        Adicionar à Sacola <i class="ph-bold ph-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <div id="cart-drawer" class="drawer">
         <div class="drawer-header">
-            <h3>Sacola </h3>
+            <h3>Sua Sacola</h3>
             <button onclick="toggleCart()" class="close-btn"><i class="ph ph-x"></i></button>
         </div>
-        <div id="cart-items" class="drawer-body"></div>
+        <div id="cart-items" class="drawer-body">
+            </div>
         <div class="drawer-footer">
             <div class="total-row">
-                <span>Total</span>
+                <span>Subtotal</span>
                 <span id="cart-total" style="color: var(--color-amber);">R$ 0,00</span>
             </div>
-            <button class="btn-checkout" onclick="finalizarPedidoWhatsApp()">FINALIZAR PEDIDO</button>
+            <button class="btn-checkout" onclick="finalizarWhatsApp()">
+                <i class="ph-bold ph-whatsapp-logo"></i> FINALIZAR PEDIDO
+            </button>
         </div>
     </div>
     
     <div id="backdrop" class="backdrop" onclick="toggleCart()"></div>
-    <div id="toast" class="toast">Adicionado à Sacola!</div>
+    <div id="toast" class="toast"><i class="ph-fill ph-check-circle"></i> Item adicionado à sacola!</div>
+    
+    <a href="#" class="fab-whatsapp" onclick="finalizarWhatsApp()" aria-label="Contato WhatsApp">
+        <i class="ph-fill ph-whatsapp-logo"></i>
+    </a>
 
     <script>
         let cart = [];
+        const formatMoeda = (valor) => valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-        const formatarMoeda = (valor) => valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        document.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('hypePanosPremium');
+            if (saved) { cart = JSON.parse(saved); atualizarUI(); }
+        });
 
-        function mudarCorProduto(imageId, novaImagemUrl, botaoClicado) {
-            document.getElementById(imageId).src = novaImagemUrl;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('cart-drawer').classList.contains('open')) toggleCart();
+        });
+
+        // Troca de Variante Visual
+        function mudarCor(btn, imgId, labelId, nomeCor, novaImgUrl) {
+            const img = document.getElementById(imgId);
+            img.classList.remove('fade-in'); void img.offsetWidth; // Restart anim
+            img.src = novaImgUrl; img.classList.add('fade-in');
             
-            const swatches = botaoClicado.parentElement.querySelectorAll('.swatch');
-            swatches.forEach(btn => btn.classList.remove('active'));
-            botaoClicado.classList.add('active');
+            const swatches = btn.parentElement.querySelectorAll('.swatch');
+            swatches.forEach(s => s.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.getElementById(labelId).innerText = `Cor: ${nomeCor}`;
+            
+            const btnAdd = btn.closest('.product-card').querySelector('.btn-add');
+            btnAdd.dataset.cor = nomeCor;
         }
 
-        function addAoCarrinho(id, nome, preco, imagemUrl) {
-            const itemExistente = cart.find(item => item.id === id && item.imagem === imagemUrl);
-            
-            if (itemExistente) {
-                itemExistente.qtd++;
-            } else {
-                cart.push({ id, nome, preco, imagem: imagemUrl, qtd: 1 });
+        // Adicionar ao Carrinho
+        function addAoCarrinho(btn, imgId) {
+            const id = `${btn.dataset.id}-${btn.dataset.cor}`;
+            const nome = `${btn.dataset.nome} (${btn.dataset.cor})`;
+            const preco = parseFloat(btn.dataset.preco);
+            const imagem = document.getElementById(imgId).src;
+
+            const existente = cart.find(item => item.id === id);
+            if (existente) existente.qtd++;
+            else cart.push({ id, nome, preco, imagem, qtd: 1 });
+
+            salvar(); atualizarUI(); mostrarToast();
+
+            // Feedback Visual Botão
+            const htmlOriginal = btn.innerHTML;
+            btn.innerHTML = 'Adicionado <i class="ph-bold ph-check"></i>';
+            btn.style.background = 'var(--text-white)'; btn.style.color = '#000';
+            setTimeout(() => { btn.innerHTML = htmlOriginal; btn.style.background = ''; btn.style.color = ''; }, 1500);
+
+            // Anima Badge
+            const badge = document.getElementById('cart-count');
+            badge.classList.remove('bump'); void badge.offsetWidth; badge.classList.add('bump');
+        }
+
+        function alterarQtd(id, delta) {
+            const idx = cart.findIndex(i => i.id === id);
+            if (idx > -1) {
+                cart[idx].qtd += delta;
+                if (cart[idx].qtd <= 0) cart.splice(idx, 1);
+                salvar(); atualizarUI();
             }
-            
-            atualizarInterface();
-            toggleCart(true);
-            mostrarToast();
         }
 
-        function alterarQtd(id, imagemUrl, delta) {
-            const index = cart.findIndex(item => item.id === id && item.imagem === imagemUrl);
-            if (index !== -1) {
-                cart[index].qtd += delta;
-                if (cart[index].qtd <= 0) cart.splice(index, 1);
-                atualizarInterface();
-            }
-        }
+        function salvar() { localStorage.setItem('hypePanosPremium', JSON.stringify(cart)); }
 
-        function atualizarInterface() {
+        function atualizarUI() {
             const container = document.getElementById('cart-items');
             const totalEl = document.getElementById('cart-total');
             const badge = document.getElementById('cart-count');
             
             container.innerHTML = '';
-            let total = 0;
-            let qtdTotal = 0;
+            let total = 0; let qtdTotal = 0;
 
             if (cart.length === 0) {
-                container.innerHTML = '<div style="text-align:center; color:var(--text-body); margin-top:50px; display:flex; flex-direction:column; gap:10px; align-items:center;"><i class="ph ph-shopping-bag-open" style="font-size:3rem; opacity:0.5;"></i><p>Sua cesta está vazia.</p></div>';
+                container.innerHTML = `<div style="text-align:center; padding-top:40px; color:var(--text-body); opacity:0.6;"><i class="ph ph-shopping-bag-open" style="font-size:3rem; margin-bottom:10px;"></i><p>Sua sacola está vazia.</p></div>`;
             } else {
                 cart.forEach(item => {
-                    total += (item.preco * item.qtd);
-                    qtdTotal += item.qtd;
-                    
+                    total += (item.preco * item.qtd); qtdTotal += item.qtd;
                     container.innerHTML += `
-                        <div style="display:flex; gap:15px; margin-bottom:20px; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);">
-                            <img src="${item.imagem}" alt="${item.nome}" style="width:70px; height:70px; object-fit:cover; border-radius:6px;">
-                            <div style="flex:1; display:flex; flex-direction:column; justify-content:space-between;">
-                                <div>
-                                    <h4 style="font-size:0.9rem; color:var(--text-white); margin-bottom:4px; font-weight:500;">${item.nome}</h4>
-                                    <span style="color:var(--color-amber); font-weight:700;">${formatarMoeda(item.preco)}</span>
-                                </div>
-                                <div style="display:flex; gap:15px; align-items:center; margin-top:10px;">
-                                    <button onclick="alterarQtd(${item.id}, '${item.imagem}', -1)" style="background:rgba(255,255,255,0.1); border:none; width:24px; height:24px; border-radius:4px; color:var(--text-white); cursor:pointer; transition:0.2s;">-</button>
-                                    <span style="color:var(--text-white); font-size:0.9rem;">${item.qtd}</span>
-                                    <button onclick="alterarQtd(${item.id}, '${item.imagem}', 1)" style="background:rgba(255,255,255,0.1); border:none; width:24px; height:24px; border-radius:4px; color:var(--text-white); cursor:pointer; transition:0.2s;">+</button>
+                        <div class="cart-item">
+                            <img src="${item.imagem}" alt="${item.nome}">
+                            <div class="cart-info">
+                                <h4>${item.nome}</h4>
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                                    <span class="price">${formatMoeda(item.preco)}</span>
+                                    <div class="qtd-controls">
+                                        <button onclick="alterarQtd('${item.id}', -1)" class="btn-qtd">${item.qtd === 1 ? '<i class="ph ph-trash"></i>' : '-'}</button>
+                                        <span style="font-size:0.9rem; min-width:15px; text-align:center;">${item.qtd}</span>
+                                        <button onclick="alterarQtd('${item.id}', 1)" class="btn-qtd">+</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `;
+                        </div>`;
                 });
             }
-
-            totalEl.innerText = formatarMoeda(total);
+            totalEl.innerText = formatMoeda(total);
             badge.innerText = qtdTotal;
             badge.style.display = qtdTotal > 0 ? 'flex' : 'none';
         }
 
-        function toggleCart(forcarAbertura = null) {
-            const drawer = document.getElementById('cart-drawer');
-            const backdrop = document.getElementById('backdrop');
-            if (forcarAbertura === true) {
-                drawer.classList.add('open'); backdrop.classList.add('show');
-            } else {
-                drawer.classList.toggle('open'); backdrop.classList.toggle('show');
-            }
+        function toggleCart() {
+            document.getElementById('cart-drawer').classList.toggle('open'); 
+            document.getElementById('backdrop').classList.toggle('show');
         }
 
+        let tmOut;
         function mostrarToast() {
             const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+            clearTimeout(tmOut); toast.classList.add('show');
+            tmOut = setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
-        // Função Nova: Envia o pedido para o WhatsApp
-        function finalizarPedidoWhatsApp() {
-            if (cart.length === 0) {
-                alert("Sua cesta está vazia! Adicione alguns produtos antes de fechar o pedido.");
-                return;
-            }
-
-            const telefone = "5511930862733";
-            
-            let mensagem = "Olá! Gostaria de finalizar meu pedido da Hype.Panos:%0A%0A";
-            let totalPedido = 0;
-
-            cart.forEach(item => {
-                const subtotal = item.preco * item.qtd;
-                totalPedido += subtotal;
-                mensagem += `• ${item.qtd}x ${item.nome} - ${formatarMoeda(subtotal)}%0A`;
+        function finalizarWhatsApp() {
+            if (cart.length === 0) return alert("Sua sacola está vazia!");
+            let msg = "🛍️ *Pedido Hype.Panos:*%0A%0A";
+            let tot = 0;
+            cart.forEach(i => {
+                let sub = i.preco * i.qtd; tot += sub;
+                msg += `• ${i.qtd}x ${i.nome} - ${formatMoeda(sub)}%0A`;
             });
-
-            mensagem += `%0A*Total a pagar: ${formatarMoeda(totalPedido)}*`;
-
-            const urlWhatsApp = `https://wa.me/${telefone}?text=${mensagem}`;
-            window.open(urlWhatsApp, '_blank');
+            msg += `%0A💰 *Total: ${formatMoeda(tot)}*%0A%0AOlá, gostaria de finalizar minha compra!`;
+            window.open(`https://wa.me/5511930862733?text=${msg}`, '_blank');
         }
-
-        document.addEventListener('DOMContentLoaded', atualizarInterface);
     </script>
 </body>
 </html>
