@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pano de Prato</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --bg-main: #07080a;
+            --bg-card: #0f1115;
+            --bg-header: rgba(7, 8, 10, 0.9);
+            
+            --text-title: #F5F0E6;
+            --text-body: #8a8d93;
+            --text-white: #FFFFFF;
+            
+            --color-amber: #E9C46A;
+            --color-amber-dark: #b59242;
+            --color-emerald: #2A9D8F;
+            --color-emerald-dark: #1f7a6f;
+            --color-sapphire: #457B9D;
+            --color-sapphire-dark: #325d7a;
+            --color-ruby: #E76F51;
+            
+            --border-color: rgba(255, 255, 255, 0.08);
+            
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-body);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 15% 50%, rgba(233, 196, 106, 0.03) 0%, transparent 40%),
+                              radial-gradient(circle at 85% 30%, rgba(42, 157, 143, 0.03) 0%, transparent 40%);
+        }
+
+        /* HEADER */
+        .dark-header { 
+            position: sticky; top: 0; z-index: 100; 
+            background: var(--bg-header); backdrop-filter: blur(20px); 
+            border-bottom: 1px solid var(--border-color); 
+        }
+        .nav-container { 
+            max-width: 1400px; margin: 0 auto; padding: 1rem 4%; 
+            display: flex; justify-content: space-between; align-items: center; 
+        }
+        .logo { 
+            font-family: var(--font-heading); font-size: 1.5rem; 
+            color: var(--color-amber); font-weight: 600; display: flex; align-items: center; gap: 8px; letter-spacing: 1px;
+        }
+        .links { display: flex; gap: 2.5rem; align-items: center; }
+        .links a { 
+            color: var(--text-body); text-decoration: none; font-size: 0.85rem; 
+            letter-spacing: 1px; transition: 0.3s; font-weight: 500; text-transform: uppercase;
+            position: relative; padding-bottom: 5px;
+        }
+        .links a:hover { color: var(--text-white); }
+        .links a.active { color: var(--text-white); }
+        .links a.active::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, var(--color-amber), transparent);
+            box-shadow: 0 0 10px var(--color-amber);
+        }
+
+        .header-actions { display: flex; align-items: center; gap: 1.5rem; }
+        .icon-btn {
+            background: transparent; border: none; color: var(--text-white);
+            font-size: 1.4rem; cursor: pointer; transition: 0.3s; position: relative;
+        }
+        .icon-btn:hover { color: var(--color-amber); }
+        .cart-badge {
+            position: absolute; top: -5px; right: -8px; background: var(--color-amber);
+            color: #000; font-size: 0.65rem; font-weight: 700; width: 16px; height: 16px;
+            display: flex; align-items: center; justify-content: center; border-radius: 50%;
+        }
+
+        /* MAIN LAYOUT */
+        .main-layout {
+            max-width: 1400px; margin: 3rem auto; padding: 0 4%;
+            display: grid; grid-template-columns: 350px 1fr; gap: 4rem;
+            flex-grow: 1; align-items: start;
+        }
+
+        /* HERO SIDEBAR */
+        .hero-sidebar { display: flex; flex-direction: column; gap: 2rem; }
+        .hero-image {
+            width: 100%; height: 350px; border-radius: 16px; overflow: hidden;
+            position: relative; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .hero-image img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); }
+        .hero-text h1 {
+            font-family: var(--font-heading); font-size: 3.5rem; line-height: 1.1; 
+            margin-bottom: 1rem; color: var(--text-title);
+        }
+        .text-gradient {
+            background: linear-gradient(90deg, var(--color-amber), var(--color-ruby));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-style: italic;
+        }
+        .hero-text p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem; }
+        
+        .btn-gradient {
+            background: linear-gradient(90deg, #3a2b25, #5a3d31);
+            border: 1px solid rgba(233,196,106,0.3); color: var(--text-white);
+            padding: 14px 28px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; 
+            letter-spacing: 1px; cursor: pointer; transition: 0.4s;
+        }
+        .btn-gradient:hover { box-shadow: 0 0 20px rgba(233,196,106,0.2); transform: translateY(-2px); }
+
+        /* SHOWCASE (VITRINE) */
+        .showcase h2 {
+            font-family: var(--font-heading); font-size: 2.2rem; color: var(--text-white);
+            margin-bottom: 2rem; font-weight: 400;
+        }
+        .cards-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;
+        }
+
+        /* NEON CARDS */
+        .product-card {
+            background: var(--bg-card); border-radius: 16px; padding: 1rem;
+            border: 2px solid var(--card-dark); display: flex; flex-direction: column;
+            transition: all 0.4s ease; position: relative;
+            box-shadow: 0 0 15px rgba(0,0,0,0.8);
+        }
+        .product-card:hover {
+            border-color: var(--card-accent);
+            box-shadow: 0 0 25px var(--card-glow), inset 0 0 15px rgba(255,255,255,0.02);
+            transform: translateY(-5px);
+        }
+
+        .card-img-wrapper {
+            width: 100%; height: 220px; border-radius: 12px; overflow: hidden; position: relative;
+            margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+        .product-card:hover .card-img-wrapper img { transform: scale(1.08); }
+
+        .badge-tag {
+            position: absolute; top: 10px; left: 10px; font-size: 0.65rem; font-weight: 700;
+            padding: 5px 10px; border-radius: 6px; z-index: 10; letter-spacing: 0.5px;
+            background: var(--card-dark); color: var(--text-white);
+            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card-details { display: flex; flex-direction: column; gap: 0.8rem; flex-grow: 1; }
+        .color-label { font-size: 0.8rem; color: var(--text-body); }
+        
+        .swatches { display: flex; gap: 8px; margin-bottom: 0.5rem; }
+        .swatch {
+            width: 20px; height: 20px; border-radius: 50%; border: 2px solid transparent;
+            cursor: pointer; transition: 0.2s;
+        }
+        .swatch.active { border-color: var(--text-white); transform: scale(1.15); box-shadow: 0 0 8px rgba(255,255,255,0.3); }
+
+        .price { font-size: 1.4rem; color: var(--text-white); font-weight: 700; margin-bottom: 1rem; }
+
+        .btn-add {
+            width: 100%; padding: 14px; border-radius: 8px; border: 1px solid var(--card-dark);
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+            color: var(--text-white); font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .product-card:hover .btn-add {
+            background: var(--card-dark); border-color: var(--card-accent);
+        }
+
+        /* DRAWER & BACKDROP (CARRINHO) */
+        .drawer { 
+            position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; height: 100vh; 
+            background: var(--bg-card); z-index: 1000; display: flex; flex-direction: column; 
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-left: 1px solid var(--border-color); 
+        }
+        .drawer.open { right: 0; box-shadow: -10px 0 30px rgba(0,0,0,0.8); }
+        .drawer-header { padding: 2rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .drawer-header h3 { font-family: var(--font-heading); color: var(--text-white); font-size: 1.5rem; }
+        .close-btn { background: none; border: none; color: var(--text-body); font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
+        .close-btn:hover { color: var(--text-white); transform: rotate(90deg); }
+        .drawer-body { flex: 1; padding: 2rem; overflow-y: auto; }
+        .drawer-footer { padding: 2rem; border-top: 1px solid var(--border-color); background: rgba(0,0,0,0.2); }
+        .total-row { display: flex; justify-content: space-between; font-size: 1.2rem; color: var(--text-white); margin-bottom: 1.5rem; font-weight: 700;}
+        .btn-checkout { width: 100%; padding: 16px; background: var(--color-amber); color: #000; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .btn-checkout:hover { background: #fff; }
+        
+        .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(5px); }
+        .backdrop.show { opacity: 1; visibility: visible; }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--color-emerald); color: #000; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; z-index: 2000; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .hero-sidebar { text-align: center; max-width: 600px; margin: 0 auto; }
+            .hero-text h1 { font-size: 3rem; }
+        }
+        @media (max-width: 768px) {
+            .links { display: none; }
+            .hero-image { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="dark-header">
+        <div class="nav-container">
+            <div class="logo">Hype. <span style="font-size: 1rem;">Panos</span></div>
+            <nav class="links">
+                <a href="#" class="active">Coleção Vibrante</a>
+               
+            </nav>
+            <div class="header-actions">
+                <button class="icon-btn"><i class="ph ph-user"></i></button>
+                <button class="icon-btn" onclick="toggleCart()">
+                    <i class="ph ph-shopping-bag"></i>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-layout">
+        <aside class="hero-sidebar">
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop" alt="Cozinha Moderna Dark">
+            </div>
+            <div class="hero-text">
+                <h1>A COZINHA<br><span class="text-gradient">COM VIDA.</span></h1>
+                <p>Descubra a coleção de panos premium com alta absorção. Trazendo texturas rústicas e cores sólidas para transformar o ambiente da sua cozinha, unindo design minimalista e performance técnica.</p>
+                <button class="btn-gradient">VER CORES</button>
+            </div>
+        </aside>
+
+        <section class="showcase">
+            <h2>Vitrine</h2>
+            
+            <div class="cards-grid">
+                <div class="product-card" style="--card-accent: var(--color-amber); --card-dark: var(--color-amber-dark); --card-glow: rgba(233,196,106,0.3);">
+                    <div class="card-img-wrapper">
+                        <div class="badge-tag" style="background: rgba(181, 146, 66, 0.8);">MAIS VENDIDO</div>
+                        <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=400&auto=format&fit=crop" alt="Pano Amber" id="img-prod-1">
+                    </div>
+                    <div class="card-details">
+                        <span class="color-label">Color amber</span>
+                        <div class="swatches">
+                            <div class="swatch active" style="background: #D4A373;" onclick="mudarCorProduto('img-prod-1', 'https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=400&auto=format&fit=crop', this)"></div>
+                            <div class="swatch" style="background: #E9C46A;" onclick="mudarCorProduto('img-prod-1', 'https://images.unsplash.com/photo-1522010664893-66440266070a?q=80&w=400&auto=format&fit=crop', this)"></div>
+                            <div class="swatch" style="background: #E76F51;" onclick="mudarCorProduto('img-prod-1', 'https://images.unsplash.com/photo-1600100412853-294022c06951?q=80&w=400&auto=format&fit=crop', this)"></div>
+                        </div>
+                        <div class="price">R$ 45,90</div>
+                        <button class="btn-add" onclick="addAoCarrinho(1, 'Pano Trama Linho (Amber)', 45.90, document.getElementById('img-prod-1').src)">
+                            ADICIONAR <i class="ph-fill ph-shopping-bag"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" style="--card-accent: var(--color-emerald); --card-dark: var(--color-emerald-dark); --card-glow: rgba(42,157,143,0.3);">
+                    <div class="card-img-wrapper">
+                        <div class="badge-tag" style="background: rgba(31, 122, 111, 0.8);">NOVIDADE</div>
+                        <img src="https://images.unsplash.com/photo-1584820927498-cafe6c15c544?q=80&w=400&auto=format&fit=crop" alt="Pano Emerald" id="img-prod-2">
+                    </div>
+                    <div class="card-details">
+                        <span class="color-label">Color emerald</span>
+                        <div class="swatches">
+                            <div class="swatch active" style="background: #2A9D8F;" onclick="mudarCorProduto('img-prod-2', 'https://images.unsplash.com/photo-1584820927498-cafe6c15c544?q=80&w=400&auto=format&fit=crop', this)"></div>
+                            <div class="swatch" style="background: #264653;" onclick="mudarCorProduto('img-prod-2', 'https://images.unsplash.com/photo-1617558661642-a1f94ea6b060?q=80&w=400&auto=format&fit=crop', this)"></div>
+                            <div class="swatch" style="background: #8AB17D;" onclick="mudarCorProduto('img-prod-2', 'https://images.unsplash.com/photo-1590656366207-26244589973e?q=80&w=400&auto=format&fit=crop', this)"></div>
+                        </div>
+                        <div class="price">R$ 39,90</div>
+                        <button class="btn-add" onclick="addAoCarrinho(2, 'Pano Absorção Pro (Emerald)', 39.90, document.getElementById('img-prod-2').src)">
+                            ADICIONAR <i class="ph-fill ph-shopping-bag"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" style="--card-accent: var(--color-sapphire); --card-dark: var(--color-sapphire-dark); --card-glow: rgba(69,123,157,0.3);">
+                    <div class="card-img-wrapper">
+                        <div class="badge-tag" style="background: rgba(50, 93, 122, 0.8);">EDIÇÃO LIMITADA</div>
+                        <img src="https://images.unsplash.com/photo-1616400620286-90209f8714eb?q=80&w=400&auto=format&fit=crop" alt="Pano Sapphire" id="img-prod-3">
+                    </div>
+                    <div class="card-details">
+                        <span class="color-label">Color sapphire</span>
+                        <div class="swatches">
+                            <div class="swatch active" style="background: #457B9D;" onclick="mudarCorProduto('img-prod-3', 'https://images.unsplash.com/photo-1616400620286-90209f8714eb?q=80&w=400&auto=format&fit=crop', this)"></div>
+                            <div class="swatch" style="background: #1D3557;" onclick="mudarCorProduto('img-prod-3', 'https://images.unsplash.com/photo-1522010664893-66440266070a?q=80&w=400&auto=format&fit=crop', this)"></div>
+                        </div>
+                        <div class="price">R$ 37,90</div>
+                        <button class="btn-add" onclick="addAoCarrinho(3, 'Pano Fio Penteado (Sapphire)', 37.90, document.getElementById('img-prod-3').src)">
+                            ADICIONAR <i class="ph-fill ph-shopping-bag"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="cart-drawer" class="drawer">
+        <div class="drawer-header">
+            <h3>Sacola </h3>
+            <button onclick="toggleCart()" class="close-btn"><i class="ph ph-x"></i></button>
+        </div>
+        <div id="cart-items" class="drawer-body"></div>
+        <div class="drawer-footer">
+            <div class="total-row">
+                <span>Total</span>
+                <span id="cart-total" style="color: var(--color-amber);">R$ 0,00</span>
+            </div>
+            <button class="btn-checkout" onclick="finalizarPedidoWhatsApp()">FINALIZAR PEDIDO</button>
+        </div>
+    </div>
+    
+    <div id="backdrop" class="backdrop" onclick="toggleCart()"></div>
+    <div id="toast" class="toast">Adicionado à Sacola!</div>
+
+    <script>
+        let cart = [];
+
+        const formatarMoeda = (valor) => valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        function mudarCorProduto(imageId, novaImagemUrl, botaoClicado) {
+            document.getElementById(imageId).src = novaImagemUrl;
+            
+            const swatches = botaoClicado.parentElement.querySelectorAll('.swatch');
+            swatches.forEach(btn => btn.classList.remove('active'));
+            botaoClicado.classList.add('active');
+        }
+
+        function addAoCarrinho(id, nome, preco, imagemUrl) {
+            const itemExistente = cart.find(item => item.id === id && item.imagem === imagemUrl);
+            
+            if (itemExistente) {
+                itemExistente.qtd++;
+            } else {
+                cart.push({ id, nome, preco, imagem: imagemUrl, qtd: 1 });
+            }
+            
+            atualizarInterface();
+            toggleCart(true);
+            mostrarToast();
+        }
+
+        function alterarQtd(id, imagemUrl, delta) {
+            const index = cart.findIndex(item => item.id === id && item.imagem === imagemUrl);
+            if (index !== -1) {
+                cart[index].qtd += delta;
+                if (cart[index].qtd <= 0) cart.splice(index, 1);
+                atualizarInterface();
+            }
+        }
+
+        function atualizarInterface() {
+            const container = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            const badge = document.getElementById('cart-count');
+            
+            container.innerHTML = '';
+            let total = 0;
+            let qtdTotal = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:var(--text-body); margin-top:50px; display:flex; flex-direction:column; gap:10px; align-items:center;"><i class="ph ph-shopping-bag-open" style="font-size:3rem; opacity:0.5;"></i><p>Sua cesta está vazia.</p></div>';
+            } else {
+                cart.forEach(item => {
+                    total += (item.preco * item.qtd);
+                    qtdTotal += item.qtd;
+                    
+                    container.innerHTML += `
+                        <div style="display:flex; gap:15px; margin-bottom:20px; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <img src="${item.imagem}" alt="${item.nome}" style="width:70px; height:70px; object-fit:cover; border-radius:6px;">
+                            <div style="flex:1; display:flex; flex-direction:column; justify-content:space-between;">
+                                <div>
+                                    <h4 style="font-size:0.9rem; color:var(--text-white); margin-bottom:4px; font-weight:500;">${item.nome}</h4>
+                                    <span style="color:var(--color-amber); font-weight:700;">${formatarMoeda(item.preco)}</span>
+                                </div>
+                                <div style="display:flex; gap:15px; align-items:center; margin-top:10px;">
+                                    <button onclick="alterarQtd(${item.id}, '${item.imagem}', -1)" style="background:rgba(255,255,255,0.1); border:none; width:24px; height:24px; border-radius:4px; color:var(--text-white); cursor:pointer; transition:0.2s;">-</button>
+                                    <span style="color:var(--text-white); font-size:0.9rem;">${item.qtd}</span>
+                                    <button onclick="alterarQtd(${item.id}, '${item.imagem}', 1)" style="background:rgba(255,255,255,0.1); border:none; width:24px; height:24px; border-radius:4px; color:var(--text-white); cursor:pointer; transition:0.2s;">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            totalEl.innerText = formatarMoeda(total);
+            badge.innerText = qtdTotal;
+            badge.style.display = qtdTotal > 0 ? 'flex' : 'none';
+        }
+
+        function toggleCart(forcarAbertura = null) {
+            const drawer = document.getElementById('cart-drawer');
+            const backdrop = document.getElementById('backdrop');
+            if (forcarAbertura === true) {
+                drawer.classList.add('open'); backdrop.classList.add('show');
+            } else {
+                drawer.classList.toggle('open'); backdrop.classList.toggle('show');
+            }
+        }
+
+        function mostrarToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+
+        // Função Nova: Envia o pedido para o WhatsApp
+        function finalizarPedidoWhatsApp() {
+            if (cart.length === 0) {
+                alert("Sua cesta está vazia! Adicione alguns produtos antes de fechar o pedido.");
+                return;
+            }
+
+            const telefone = "5511930862733";
+            
+            let mensagem = "Olá! Gostaria de finalizar meu pedido da Hype.Panos:%0A%0A";
+            let totalPedido = 0;
+
+            cart.forEach(item => {
+                const subtotal = item.preco * item.qtd;
+                totalPedido += subtotal;
+                mensagem += `• ${item.qtd}x ${item.nome} - ${formatarMoeda(subtotal)}%0A`;
+            });
+
+            mensagem += `%0A*Total a pagar: ${formatarMoeda(totalPedido)}*`;
+
+            const urlWhatsApp = `https://wa.me/${telefone}?text=${mensagem}`;
+            window.open(urlWhatsApp, '_blank');
+        }
+
+        document.addEventListener('DOMContentLoaded', atualizarInterface);
+    </script>
+</body>
+</html>
