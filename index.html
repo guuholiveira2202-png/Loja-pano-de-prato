@@ -325,13 +325,11 @@
             .nav-links { display: none; }
             .logo { font-size: 1.3rem; }
             
-            /* Ajustes Hero: Evitar rolagem desnecessária */
             .hero { height: auto; min-height: 100vh; margin-bottom: 4rem; }
             .hero h1 { font-size: 3rem; margin-bottom: 2rem; }
             .editorial-label { font-size: 0.65rem; margin-bottom: 1.5rem; }
             .btn-editorial { padding: 15px 30px; font-size: 0.7rem; }
             
-            /* Ajustes Seção e Grid */
             .showcase { margin-bottom: 4rem; padding: 0 20px; }
             .section-header { margin-bottom: 3rem; }
             .section-header h2 { font-size: 2.2rem; }
@@ -339,14 +337,12 @@
             
             .cards-grid { grid-template-columns: 1fr; gap: 2rem; }
             
-            /* Ajustes Cards: Imagem menor e sem background forçado */
             .product-card { padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); border-radius: 0; background: transparent; }
             .product-card:hover { transform: none; box-shadow: none; border-color: transparent; }
             .product-card::before { display: none; }
             .card-img { height: 350px; margin-bottom: 1.5rem; }
             .product-title { font-size: 1.5rem; }
             
-            /* Botão de Add ao Carrinho Sempre Visível */
             .btn-add { 
                 opacity: 1; visibility: visible; transform: none; 
                 background: transparent; color: var(--text-primary); 
@@ -355,7 +351,6 @@
             }
             .btn-add:hover { background: var(--text-primary); color: #000; }
             
-            /* Ajustes da Sacola (Drawer) para não ocupar 100% da tela tão apertado */
             .drawer { right: -100%; max-width: 100%; border-left: none; }
             .drawer-header { padding: 1.5rem 1.5rem; }
             .drawer-header h3 { font-size: 1.5rem; }
@@ -369,14 +364,13 @@
             
             .btn-checkout { padding: 15px; font-size: 0.75rem; }
             
-            /* Toast Centralizado */
             .toast { width: 90%; max-width: 350px; text-align: center; padding: 15px; justify-content: center; font-size: 0.7rem; bottom: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="header">
+    <header class="header" id="topo">
         <div class="nav-container">
             <a href="#" class="logo">Hype.Panos</a>
             <nav class="nav-links">
@@ -385,7 +379,7 @@
                 <a href="#">A Marca</a>
             </nav>
             <div class="header-actions">
-                
+                <button class="icon-btn" aria-label="Perfil"><i class="ph ph-user"></i></button>
                 <button class="icon-btn" id="btn-cart-nav" onclick="toggleCart()" aria-label="Sacola">
                     <i class="ph ph-handbag"></i>
                     <span class="cart-badge" id="cart-count" style="display: none;">0</span>
@@ -412,7 +406,7 @@
         <div class="cards-grid">
             <div class="product-card reveal">
                 <div class="card-img">
-                    <img src="https://scontent.xx.fbcdn.net/v/t1.15752-9/696279329_1374313217820113_4424819261121203750_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_ohc=A82YNYfIE3QQ7kNvwFNE2yS&_nc_oc=AdrRm-nGehNZma9mRaGiTayqp6Om_lfMbxsv3QHAUPNGdG5DJEd6yeYZ02SrLUTzNE5w8h7-lnoGwu15RWUGKxWY&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.xx&oh=03_Q7cD5QH8gJ-W0jPbdtzfIygV4BufF_wqsEOFOK8xeUZJ5bsDDg&oe=6A28CC35" alt="Pano Trama Linho" id="img-prod-1">
+                    <img src="https://scontent-gru2-2.xx.fbcdn.net/v/t1.15752-9/696279329_1374313217820113_4424819261121203750_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_ohc=A82YNYfIE3QQ7kNvwH4h8mV&_nc_oc=AdqYGvRetdqiUiRdlUwhyYvesnGXdoxcaWpIOLPqzuSLxoKZOqOzUAJtLf93X65JQ_w&_nc_zt=23&_nc_ht=scontent-gru2-2.xx&_nc_ss=7b6a8&oh=03_Q7cD5QGtgs3QmmhGk7YdHp7PiCrow5jEnRazxGRn9Wf50KIeDA&oe=6A28CC35" alt="Pano Trama Linho" id="img-prod-1">
                 </div>
                 <div class="card-info">
                     <div>
@@ -421,8 +415,8 @@
                     </div>
                     <div class="color-section">
                         <div class="swatches">
-                            <div class="swatch active" style="background: #D4A373;" onclick="mudarCor(this, 'img-prod-1', 'Amber Gold', 'https://scontent.xx.fbcdn.net/v/t1.15752-9/696279329_1374313217820113_4424819261121203750_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_ohc=A82YNYfIE3QQ7kNvwFNE2yS&_nc_oc=AdrRm-nGehNZma9mRaGiTayqp6Om_lfMbxsv3QHAUPNGdG5DJEd6yeYZ02SrLUTzNE5w8h7-lnoGwu15RWUGKxWY&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.xx&oh=03_Q7cD5QH8gJ-W0jPbdtzfIygV4BufF_wqsEOFOK8xeUZJ5bsDDg&oe=6A28CC35')"></div>
-                            <div class="swatch" style="background: #5A3D31;" onclick="mudarCor(this, 'img-prod-1', 'Dark Rust', 'https://scontent.xx.fbcdn.net/v/t1.15752-9/691531216_1346293167319853_300258286289090615_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=9f807c&_nc_ohc=rcJezvWgXV4Q7kNvwHzU-yH&_nc_oc=AdpDs_mwZRz5BEYfn4njcOSyiaLL5FmfHf7e7rdOVjuVCfOlxEYj9Olz8xd1R2vZ6gHoVBURXoFV2P5U06MyTpLv&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.xx&oh=03_Q7cD5QGxR0QG9wgq0bH7iND3dxgb31uCKKzu_MigI2htB8OAPQ&oe=6A28E11D')"></div>
+                            <div class="swatch active" style="background: #D4A373;" onclick="mudarCor(this, 'img-prod-1', 'Amber Gold', 'https://scontent-gru2-2.xx.fbcdn.net/v/t1.15752-9/696279329_1374313217820113_4424819261121203750_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_ohc=A82YNYfIE3QQ7kNvwH4h8mV&_nc_oc=AdqYGvRetdqiUiRdlUwhyYvesnGXdoxcaWpIOLPqzuSLxoKZOqOzUAJtLf93X65JQ_w&_nc_zt=23&_nc_ht=scontent-gru2-2.xx&_nc_ss=7b6a8&oh=03_Q7cD5QGtgs3QmmhGk7YdHp7PiCrow5jEnRazxGRn9Wf50KIeDA&oe=6A28CC35')"></div>
+                            <div class="swatch" style="background: #5A3D31;" onclick="mudarCor(this, 'img-prod-1', 'Dark Rust', 'https://scontent-gru2-2.xx.fbcdn.net/v/t1.15752-9/691531216_1346293167319853_300258286289090615_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=9f807c&_nc_ohc=rcJezvWgXV4Q7kNvwHOzABF&_nc_oc=AdrydlBq90a1P-1dZ7LUmU8sz2bhAhcz6uQTOk7_xQLZLBR2XaEmZ6BwsWOSBK7wHT4&_nc_zt=23&_nc_ht=scontent-gru2-2.xx&_nc_ss=7b6a8&oh=03_Q7cD5QH8nQiBuGoeYc2Uh5xJRAottxRsHGyYYOfANiMq2azjVg&oe=6A28E11D')"></div>
                         </div>
                     </div>
                     <button class="btn-add" data-id="1" data-nome="Pano Trama Linho" data-preco="45.90" data-cor="Amber Gold" onclick="addAoCarrinho(this, 'img-prod-1')">
@@ -433,7 +427,7 @@
 
             <div class="product-card reveal">
                 <div class="card-img">
-                    <img src="https://scontent.xx.fbcdn.net/v/t1.15752-9/690778495_2504356550022185_6959816602032764135_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_ohc=ay7mvtv0onUQ7kNvwHmGSR9&_nc_oc=Adri7RastSDdmsBekZvWFtEKMm5GqOXdxXSGOAq-p6hd41GfAgBfSzboUfwUpRQzNUttaw0djwsRH7xVxyRNz10X&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.xx&oh=03_Q7cD5QGfCv4-GDHfXPaLLOOdj4YOjvyu4yNcatRFl0hDpo7i6g&oe=6A28EEFE" alt="Pano Absorção Pro" id="img-prod-2">
+                    <img src="https://scontent-gru2-1.xx.fbcdn.net/v/t1.15752-9/690778495_2504356550022185_6959816602032764135_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_ohc=ay7mvtv0onUQ7kNvwGwTyqS&_nc_oc=AdpdCunuAPmgD7LMXWCusd1wBPhs_89gai7c5x4A5BTgX8WaFtKjtbHSK3RdFfY3D7k&_nc_zt=23&_nc_ht=scontent-gru2-1.xx&_nc_ss=7b6a8&oh=03_Q7cD5QEGenR3DrXrQ2JQFSVCwUtFCvnuy4EC-tIE92BXr5uuzw&oe=6A28EEFE" alt="Pano Absorção Pro" id="img-prod-2">
                 </div>
                 <div class="card-info">
                     <div>
@@ -442,8 +436,8 @@
                     </div>
                     <div class="color-section">
                         <div class="swatches">
-                            <div class="swatch active" style="background: #2A9D8F;" onclick="mudarCor(this, 'img-prod-2', 'Emerald Forest', 'https://scontent.xx.fbcdn.net/v/t1.15752-9/690778495_2504356550022185_6959816602032764135_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_ohc=ay7mvtv0onUQ7kNvwHmGSR9&_nc_oc=Adri7RastSDdmsBekZvWFtEKMm5GqOXdxXSGOAq-p6hd41GfAgBfSzboUfwUpRQzNUttaw0djwsRH7xVxyRNz10X&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.xx&oh=03_Q7cD5QGfCv4-GDHfXPaLLOOdj4YOjvyu4yNcatRFl0hDpo7i6g&oe=6A28EEFE')"></div>
-                            <div class="swatch" style="background: #264653;" onclick="mudarCor(this, 'img-prod-2', 'Dark Ocean', 'https://scontent.xx.fbcdn.net/v/t1.15752-9/692488652_1283493003412905_8473486323461588656_n.webp?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_ohc=gHg7t3mqnJsQ7kNvwG1cTos&_nc_oc=AdpDrUW4D7jEbuTbWohhyoinzn-Ewj22pwUIEmSnxa7feV2PCW-ICdCbLdzLivXhnwlqIKe9_i9ccPQCE-PqOu7P&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.xx&oh=03_Q7cD5QGk1sNpcWtX4HOAxG87A_lbcfk8kA_p3a58dG7rAETOGg&oe=6A28DA6B')"></div>
+                            <div class="swatch active" style="background: #2A9D8F;" onclick="mudarCor(this, 'img-prod-2', 'Emerald Forest', 'https://scontent-gru2-1.xx.fbcdn.net/v/t1.15752-9/690778495_2504356550022185_6959816602032764135_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_ohc=ay7mvtv0onUQ7kNvwGwTyqS&_nc_oc=AdpdCunuAPmgD7LMXWCusd1wBPhs_89gai7c5x4A5BTgX8WaFtKjtbHSK3RdFfY3D7k&_nc_zt=23&_nc_ht=scontent-gru2-1.xx&_nc_ss=7b6a8&oh=03_Q7cD5QEGenR3DrXrQ2JQFSVCwUtFCvnuy4EC-tIE92BXr5uuzw&oe=6A28EEFE')"></div>
+                            <div class="swatch" style="background: #264653;" onclick="mudarCor(this, 'img-prod-2', 'Dark Ocean', 'https://scontent-gru2-2.xx.fbcdn.net/v/t1.15752-9/692488652_1283493003412905_8473486323461588656_n.webp?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_ohc=gHg7t3mqnJsQ7kNvwHYexVa&_nc_oc=AdqGCqq7eYHWcKjlc6NtIAlfxyAJF6SvFEQE55gHbS1vk3owttZha1-9pssKB5kncKA&_nc_zt=23&_nc_ht=scontent-gru2-2.xx&_nc_ss=7b6a8&oh=03_Q7cD5QFHlKk-IP9bZ07NARIC7KwHgnkWhMNROiqSz4txWYF0PA&oe=6A28DA6B')"></div>
                         </div>
                     </div>
                     <button class="btn-add" data-id="2" data-nome="Pano Absorção Pro" data-preco="39.90" data-cor="Emerald Forest" onclick="addAoCarrinho(this, 'img-prod-2')">
@@ -673,7 +667,22 @@
             });
             msg += `%0A*Total:* ${formatMoeda(tot)}%0A%0AOlá, gostaria de prosseguir com minha compra.`;
             
+            // 1. Abre o WhatsApp com o pedido
             window.open(`https://wa.me/5511930862733?text=${msg}`, '_blank');
+            
+            // 2. Limpa os campos do formulário
+            nome.value = '';
+            endereco.value = '';
+            pgto.value = '';
+            
+            // 3. Esvazia o carrinho e atualiza o visual
+            limparCarrinho();
+            
+            // 4. Fecha a aba da sacola
+            toggleCart();
+            
+            // 5. Rola a página de volta para o topo de forma suave
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
